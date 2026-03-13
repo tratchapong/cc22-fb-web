@@ -37,8 +37,8 @@ const userRouter = createBrowserRouter([
 ])
 
 function AppRouter() {
-  // const user = null 
-  const user = { email : 'andy@ggg.mail' }
+  const user = null 
+  // const user = { email : 'andy@ggg.mail' }
   const finalRouter = user ? userRouter : guestRouter
   return (
     <Suspense fallback={<span className="loading loading-dots loading-xl"></span>}>
