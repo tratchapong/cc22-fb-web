@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { registerSchema } from "@/validations/schema"
 import axios from "axios"
 import { Flip, toast, ToastContainer, Zoom } from "react-toastify"
+import { apiRegister, mainApi } from "@/api/mainApi"
 
 
 function RegisterForm() {
@@ -18,7 +19,9 @@ function RegisterForm() {
   const onSubmit = async (data) => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000))
-      const resp = await axios.post('http://localhost:8899/api/auth/register', data)
+      // const resp = await axios.post('http://localhost:8899/api/auth/register', data)
+      // const resp = await apiRegister(data)
+      const resp = await mainApi.post('/auth/register', data)
       document.getElementById('register-form').close()
       toast.success(resp.data.message, { transition: Zoom, autoClose: 4000 })
       reset()
