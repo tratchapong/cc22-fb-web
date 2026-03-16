@@ -13,13 +13,14 @@ function RegisterForm() {
       firstName: '', lastName: '', identity: '', password: '', confirmPassword: ''
     }
   })
-  const { errors } = formState
+  const { errors, isSubmitting } = formState
 
   const onSubmit = async (data) => {
     try {
+      await new Promise( resolve => setTimeout(resolve, 2000))
       const resp = await axios.post('http://localhost:8899/api/auth/register', data)
       document.getElementById('register-form').close()
-      toast.success(JSON.stringify(resp.data.message), { transition: Zoom, autoClose: 4000 })
+      toast.success(resp.data.message, { transition: Zoom, autoClose: 4000 })
       reset()
     } catch (err) {
       console.dir(err)
@@ -33,7 +34,9 @@ function RegisterForm() {
   return (
     <>
       <ToastContainer containerId="register-modal" />
-      <div className="text-3xl text-center opacity-70">Create a new account</div>
+      <div className="text-3xl text-center opacity-70">Create a new account
+        { isSubmitting && <span className="loading loading-bars text-info mx-2"></span> } 
+      </div>
       <div className="divider opacity-60"></div>
       <form onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col gap-5 p-4 pt-3'
@@ -75,7 +78,7 @@ function RegisterForm() {
           />
           <p className="text-sm text-error">{errors.confirmPassword?.message}</p>
         </div>
-        <button className="btn btn-secondary text-xl">Sign up</button>
+        <button className="btn btn-secondary text-xl" disabled={isSubmitting} >Sign up</button>
         {/* ทำปุ่มนี้ให้ clear form ได้ */}
         <button type='button' className="btn btn-base-200 text-xl" onClick={() => reset()} >Clear</button>
       </form>
