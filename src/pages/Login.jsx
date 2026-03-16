@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 function Login() {
-  const token = useUserStore(state=>state.token)
+  const user = useUserStore(state=>state.user)
   const login = useUserStore(state=>state.login)
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: zodResolver(loginSchema),
@@ -16,9 +16,9 @@ function Login() {
 
   const onSubmit = async (body) => {
     try {
-      // toast.info(JSON.stringify(body, null, 2))
+      await new Promise(resolve => setTimeout(resolve, 1000))
       const resp = await login(body)
-      toast.success(JSON.stringify(resp.data))
+      toast.success(resp.data.message)
     } catch (err) {
       console.dir(err)
       const errMsg = err.response?.data.message || err.message
@@ -33,6 +33,7 @@ function Login() {
           <div className=" flex flex-col gap-4 mt-20 basis-3/5 max-md:text-center">
             <div className="text-5xl text-primary font-bold">Fakebook
               <input type="checkbox" value="dark" className="toggle theme-controller" />
+              <p className="mx-2">Hello, {user?.firstName}</p>
             </div>
             <h2 className="text-[30px] leading-8 mt-3 w-128.5 max-md:w-auto ">
               Fakebook helps you connect and share with the people in your life.
@@ -58,7 +59,9 @@ function Login() {
                       />
                       <p className="text-sm text-error">{errors.password?.message}</p>
                     </div>
-                    <button className='btn btn-primary text-xl' disabled={!isValid}>Login</button>
+                    <button className='btn btn-primary text-xl' disabled={!isValid}>Login
+                      { isSubmitting && <span className="loading loading-dots loading-sm"></span> }
+                    </button>
                     <p className="text-center cursor-pointer opacity-70">Forgotten password?</p>
                     <div className="divider my-0"></div>
                     <button className="btn btn-secondary"
