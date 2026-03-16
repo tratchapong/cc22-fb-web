@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { registerSchema } from "@/validations/schema"
 import axios from "axios"
+import { Flip, toast, ToastContainer, Zoom } from "react-toastify"
 
 
 function RegisterForm() {
@@ -16,16 +17,22 @@ function RegisterForm() {
 
   const onSubmit = async (data) => {
     try {
-      // alert(JSON.stringify(data, null, 2))
       const resp = await axios.post('http://localhost:8899/api/auth/register', data)
-      alert(JSON.stringify(resp,null,2))
+      document.getElementById('register-form').close()
+      toast.success(JSON.stringify(resp.data.message), { transition: Zoom, autoClose: 4000 })
+      reset()
     } catch (err) {
-      console.log(err)
-      alert(JSON.stringify(err,null,2))
+      console.dir(err)
+      const errMsg = err.response?.data.message || err.message
+      // alert(JSON.stringify(err,null,2))
+      toast.error(errMsg, { 
+        transition: Zoom, autoClose: 3000, containerId: 'register-modal', position:'top-center'
+      })
     }
   }
   return (
     <>
+      <ToastContainer containerId="register-modal" />
       <div className="text-3xl text-center opacity-70">Create a new account</div>
       <div className="divider opacity-60"></div>
       <form onSubmit={handleSubmit(onSubmit)}
@@ -69,12 +76,14 @@ function RegisterForm() {
           <p className="text-sm text-error">{errors.confirmPassword?.message}</p>
         </div>
         <button className="btn btn-secondary text-xl">Sign up</button>
+        {/* ทำปุ่มนี้ให้ clear form ได้ */}
+        <button type='button' className="btn btn-base-200 text-xl" onClick={() => reset()} >Clear</button>
       </form>
-      <div className="border">
+      {/* <div className="border">
         <pre className="text-error text-xs">
           {JSON.stringify(errors, (k, v) => k === 'ref' ? undefined : v, 2)}
         </pre>
-      </div>
+      </div> */}
     </>
   )
 }
