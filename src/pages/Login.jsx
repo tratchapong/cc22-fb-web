@@ -28,11 +28,11 @@ function Login() {
                   <button className='btn btn-primary text-xl'>Login</button>
                   <p className="text-center cursor-pointer opacity-70">Forgotten password?</p>
                   <div className="divider my-0"></div>
-                  <buttun className="btn btn-secondary"
+                  <button className="btn btn-secondary"
                     onClick={()=>document.getElementById('register-form').showModal()}
                   >
                     Create new account
-                  </buttun>
+                  </button>
                 </div>
               </form>
             </div>
