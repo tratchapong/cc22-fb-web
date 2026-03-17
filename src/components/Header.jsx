@@ -27,7 +27,7 @@ function Header() {
         <Link to='/' className='flex justify-center hover:outline-2 hover:outline-blue-900'>
           <ShopIcon className='w-1/2' />
         </Link>
-        <Link to='/' className='flex justify-center hover:outline-2 hover:outline-blue-900'>
+        <Link to='/friends' className='flex justify-center hover:outline-2 hover:outline-blue-900'>
           <FriendsIcon className='w-1/2' />
         </Link>
       </div>
