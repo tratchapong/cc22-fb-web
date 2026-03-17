@@ -3,11 +3,29 @@ import Avatar from "./Avatar"
 import { PhotoIcon2 } from "@/icons"
 import { useState } from "react"
 import AddPicture from "./AddPicture"
+import { toast } from "react-toastify"
+import axios from "axios"
 
 function PostForm() {
   const user = useUserStore(state => state.user)
   const [addPic, setAddPic] = useState(false)
   const [file, setFile] = useState(null)
+
+  const hdlCreatePost = async () => {
+    let imageUrl = ''
+    try {
+      if(file) {
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('upload_preset', 'cc22-upload')
+        const resp = await axios.post('https://api.cloudinary.com/v1_1/tratchapong/image/upload', formData)
+        imageUrl = resp.data.secure_url
+        console.log(imageUrl)
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <div className='flex flex-col gap-2'>
       <h3 className="text-xl text-center">Create post</h3>
@@ -36,7 +54,7 @@ function PostForm() {
           <PhotoIcon2 className='w-7' />
         </div>
       </div>
-      <button className='btn btn-sm btn-primary'>Create Post</button>
+      <button className='btn btn-sm btn-primary' onClick={hdlCreatePost}>Create Post</button>
     </div>
   )
 }
