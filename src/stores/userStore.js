@@ -2,7 +2,6 @@ import { mainApi } from "@/api/mainApi";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-
 const useUserStore = create( persist((set, get)=>({
   user: null,
   token: '',
