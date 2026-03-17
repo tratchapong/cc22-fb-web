@@ -1,9 +1,13 @@
 import useUserStore from "@/stores/userStore"
 import Avatar from "./Avatar"
 import { PhotoIcon2 } from "@/icons"
+import { useState } from "react"
+import AddPicture from "./AddPicture"
 
 function PostForm() {
   const user = useUserStore(state => state.user)
+  const [addPic, setAddPic] = useState(false)
+  const [file, setFile] = useState(null)
   return (
     <div className='flex flex-col gap-2'>
       <h3 className="text-xl text-center">Create post</h3>
@@ -24,10 +28,11 @@ function PostForm() {
       <textarea className='textarea textarea-ghost w-full'
         placeholder={`what do you think? ${user.firstName}`}
       ></textarea>
+     {addPic && <AddPicture file={file} setFile={setFile} />}
       <div className="flex border rounded-lg p-2 justify-between items-center">
         <p>add with your post</p>
         <div className="flex justify-center items-center w-10 h-10 rounded-full bg-slate-100
-         hover:bg-slate-200 active:scale-110">
+         hover:bg-slate-200 active:scale-110" onClick={()=>setAddPic(prv=>!prv)}>
           <PhotoIcon2 className='w-7' />
         </div>
       </div>
