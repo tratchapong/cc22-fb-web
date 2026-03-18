@@ -35,7 +35,7 @@ function PostForm() {
   }
   return (
     <div className='flex flex-col gap-2'>
-      <h3 className="text-xl text-center">Create post</h3>
+      <h3 className="text-xl text-center">Create post :{message.split('\n').length}</h3>
       <div className="divider mt-1 mb-0"></div>
       <div className="flex gap-2">
         <Avatar className='w-11 h-11 rounded-full'
@@ -54,6 +54,7 @@ function PostForm() {
         placeholder={`what do you think? ${user.firstName}`}
         value={message}
         onChange={e=>setMessage(e.target.value)}
+        rows={message.split('\n').length}
       ></textarea>
       {addPic && <AddPicture file={file} setFile={setFile} />}
       <div className="flex border rounded-lg p-2 justify-between items-center">
