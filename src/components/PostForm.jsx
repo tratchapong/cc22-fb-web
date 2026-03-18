@@ -4,26 +4,33 @@ import { PhotoIcon2 } from "@/icons"
 import { useState } from "react"
 import AddPicture from "./AddPicture"
 import { toast } from "react-toastify"
-import axios from "axios"
+import uploadCloud from "@/utils/uploadCloud"
+import usePostStore from "@/stores/postStore"
 
 function PostForm() {
   const user = useUserStore(state => state.user)
+  const createPost = usePostStore(state=> state.createPost)
   const [addPic, setAddPic] = useState(false)
   const [file, setFile] = useState(null)
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const hdlCreatePost = async () => {
     let imageUrl = ''
+    setLoading(true)
     try {
       if(file) {
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('upload_preset', 'cc22-upload')
-        const resp = await axios.post('https://api.cloudinary.com/v1_1/tratchapong/image/upload', formData)
-        imageUrl = resp.data.secure_url
-        console.log(imageUrl)
+        imageUrl = await uploadCloud(file)
       }
-    }catch(err){
-      console.log(err)
+      const body = { message : message, image : imageUrl }
+      const resp = await createPost(body)
+      setLoading(false)
+      document.getElementById('postform').close()
+    } catch (err) {
+      console.dir(err)
+      const errMsg = err.response?.data.message || err.message
+      toast.error(errMsg)
+      setLoading(false)
     }
   }
   return (
@@ -45,16 +52,22 @@ function PostForm() {
       </div>
       <textarea className='textarea textarea-ghost w-full'
         placeholder={`what do you think? ${user.firstName}`}
+        value={message}
+        onChange={e=>setMessage(e.target.value)}
       ></textarea>
-     {addPic && <AddPicture file={file} setFile={setFile} />}
+      {addPic && <AddPicture file={file} setFile={setFile} />}
       <div className="flex border rounded-lg p-2 justify-between items-center">
         <p>add with your post</p>
         <div className="flex justify-center items-center w-10 h-10 rounded-full bg-slate-100
-         hover:bg-slate-200 active:scale-110" onClick={()=>setAddPic(prv=>!prv)}>
+         hover:bg-slate-200 active:scale-110" onClick={() => setAddPic(prv => !prv)}>
           <PhotoIcon2 className='w-7' />
         </div>
       </div>
-      <button className='btn btn-sm btn-primary' onClick={hdlCreatePost}>Create Post</button>
+      <button className='btn btn-sm btn-primary' onClick={hdlCreatePost}
+        disabled={loading || !message.trim() && !file}
+      >Create Post
+        {loading && <span className="loading loading-dots loading-sm"></span>}
+      </button>
     </div>
   )
 }
