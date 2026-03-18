@@ -10,6 +10,7 @@ import usePostStore from "@/stores/postStore"
 function PostForm() {
   const user = useUserStore(state => state.user)
   const createPost = usePostStore(state=> state.createPost)
+  const createPost2 = usePostStore(state=> state.createPost2)
   const [addPic, setAddPic] = useState(false)
   const [file, setFile] = useState(null)
   const [message, setMessage] = useState('')

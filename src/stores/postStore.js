@@ -1,5 +1,6 @@
 import { createLike, createPost, deletePost, getAllPosts, unLike, updatePost } from "@/api/mainApi";
 import { create } from "zustand";
+import useUserStore from "./userStore";
 
 
 const usePostStore = create((set, get) => ({
@@ -9,6 +10,12 @@ const usePostStore = create((set, get) => ({
        const resp = await createPost(body)
        get().getAllPosts()
        return resp
+   },
+   createPost2: async (body) => {
+       const resp = await createPost(body)
+       set( state => ( {
+        posts : [ {...resp.data.post, user: useUserStore.getState().user, likes:[], comments: [] ,}, ...state.posts ]
+       }) )
    },
    getAllPosts: async () => {
        const resp = await getAllPosts()
