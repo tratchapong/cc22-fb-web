@@ -10,7 +10,7 @@ function PostContainer() {
   const posts = usePostStore(state => state.posts)
   const setCurrentPost = usePostStore(state => state.setCurrentPost)
   const currentPost = usePostStore(state => state.currentPost)
-  
+
   useEffect(() => {
     getAllPosts()
   }, [])
@@ -23,7 +23,7 @@ function PostContainer() {
           <PostItem key={post.id} post={post} />
         ))}
 
-        {/* <pre>{JSON.stringify(posts, null, 2)}</pre> */}
+        <pre>{JSON.stringify(posts[0], null, 2)}</pre>
       </div>
       <dialog className='modal' id='editform-modal' onClose={() => setCurrentPost(null)}>
         <div className="modal-box ">

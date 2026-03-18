@@ -4,12 +4,25 @@ import Avatar from './Avatar'
 import usePostStore from '@/stores/postStore'
 import { toast } from 'react-toastify'
 import useUserStore from '@/stores/userStore'
+import TimeAgo from 'react-timeago'
 
 function PostItem(props) {
   const { post } = props
   const user = useUserStore(state => state.user)
-  const setCurrentPost = usePostStore(state=> state.setCurrentPost)
+  const setCurrentPost = usePostStore(state => state.setCurrentPost)
   const deletePost = usePostStore(state => state.deletePost)
+  const createLike = usePostStore(state => state.createLike)
+  const unLike = usePostStore(state => state.unLike)
+
+  const haveLike = post.likes.some(el => el.userId === user.id) // boolean
+
+  const hdlLikeClick = async () => {
+    if (haveLike) {
+      await unLike(post.id)
+    } else {
+      await createLike(post.id)
+    }
+  }
 
   const hdlDelete = async () => {
     try {
@@ -35,7 +48,7 @@ function PostItem(props) {
             <div className="flex flex-col">
               <p className='font-bold text-sm'>{post.user.firstName} {post.user.lastName}</p>
               <p className='text-xs opacity-70'>
-                1d ago
+                <TimeAgo date={post.createdAt} />
               </p>
             </div>
           </div>
@@ -45,7 +58,7 @@ function PostItem(props) {
                 <div tabIndex={0} role='button'>
                   <div className="avatar items-center cursor-pointer">
                     <div className="w-10 h-10 rounded-full !flex justify-center items-center hover:bg-gray-200">
-                       <ThreeDotIcon className='w-6' />
+                      <ThreeDotIcon className='w-6' />
                     </div>
                   </div>
                 </div>
@@ -83,9 +96,11 @@ function PostItem(props) {
         <div className="divider h-0 my-0"></div>
         {/* 3 buttons */}
         <div className="flex gap-3 justify-between">
-          <div className={`flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1
-           ${Math.random() > 0.5 ? 'bg-blue-300 text-white' : ''} `} >
-            <LikeIcon className='w-6' /> Like
+          <div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1"
+            onClick={hdlLikeClick}
+          >
+            {haveLike && <LikeIcon className='w-10 outline-primary outline-1 rounded outline-offset-2' />}
+            {!haveLike && <LikeIcon className='w-6' />}
           </div>
           <div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1">
             <CommentIcon className='w-8' /> Comment
