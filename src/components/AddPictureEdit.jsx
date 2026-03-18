@@ -21,7 +21,7 @@ function AddPictureEdit(props) {
 				onClick={() => document.getElementById('input-file').click()} >
 				<input type="file" id="input-file" className="hidden"
 					onChange={hdlFileChange} />
-				<img src={imageUrl} className="h-full block mx-auto max-h-[300px] object-contain" />
+				<img src={imageUrl} className="h-full block mx-auto max-h-75 object-contain" />
 				{(file || image) &&
 					<button className="btn btn-sm btn-circle btn-dash btn-error absolute top-1 right-1 opacity-60"
 						onClick={removePic}>x</button>

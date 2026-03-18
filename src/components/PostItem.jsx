@@ -57,19 +57,19 @@ function PostItem(props) {
               <div className="dropdown">
                 <div tabIndex={0} role='button'>
                   <div className="avatar items-center cursor-pointer">
-                    <div className="w-10 h-10 rounded-full !flex justify-center items-center hover:bg-gray-200">
+                    <div className="w-10 h-10 rounded-full flex! justify-center items-center hover:bg-gray-200">
                       <ThreeDotIcon className='w-6' />
                     </div>
                   </div>
                 </div>
-                <ul tabIndex={0} className='dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow'>
+                <ul tabIndex={0} className='dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow'>
                   <li onClick={hdlUpdate}><a>Edit</a></li>
                   <li onClick={hdlDelete}><a>Delete</a></li>
                 </ul>
               </div>
             )}
             <div className="avatar items-center cursor-pointer">
-              <div className="w-10 h-10 rounded-full !flex justify-center items-center hover:bg-gray-200">
+              <div className="w-10 h-10 rounded-full flex! justify-center items-center hover:bg-gray-200">
                 <CloseIcon className='w-6' />
               </div>
             </div>
@@ -78,13 +78,13 @@ function PostItem(props) {
         <p>{post.message}</p>
         {post.image && (
           <img src={post.image} alt="post-image"
-            className='p-4 max-h-[200px] object-contain'
+            className='p-4 max-h-50 object-contain'
           />
         )}
         {/* like , comment */}
         <div className="flex justify-between items-center pe-4">
           <div className="avatar items-end cursor-pointer gap-1">
-            <div className="w-7 h-7 rounded-full !flex justify-center items-center bg-blue-200">
+            <div className="w-7 h-7 rounded-full flex! justify-center items-center bg-blue-200">
               <LikeIcon className='w-5' />
             </div>
             <p>{post.likes.length} likes</p>
