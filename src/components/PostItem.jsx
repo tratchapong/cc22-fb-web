@@ -28,7 +28,7 @@ function PostItem(props) {
   const hdlDelete = async () => {
     try {
       const resp = await deletePost(post.id)
-      toast.success(resp.data.message)
+      // toast.success(resp.data.message)
     } catch (err) {
       const errMsg = err.response?.data.message || err.message
       toast.error(errMsg)

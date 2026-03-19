@@ -4,8 +4,11 @@ import { useEffect } from "react"
 import PostItem from "./PostItem"
 import { CloseIcon } from "@/icons"
 import PostFormEdit from "./PostFormEdit"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 function PostContainer() {
+  const [parent] = useAutoAnimate();
+
   const getAllPosts = usePostStore(state => state.getAllPosts)
   const posts = usePostStore(state => state.posts)
   const setCurrentPost = usePostStore(state => state.setCurrentPost)
@@ -17,7 +20,7 @@ function PostContainer() {
 
   return (
     <>
-      <div className="w-170 mx-auto min-h-screen my-3 flex flex-col gap-4 rounded-lg ">
+      <div ref={parent} className="w-170 mx-auto min-h-screen my-3 flex flex-col gap-4 rounded-lg">
         <CreatePost />
         {posts.map(post => (
           <PostItem key={post.id} post={post} />
