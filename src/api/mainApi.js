@@ -33,4 +33,7 @@ export const createLike = (id)=>mainApi.post(`/post/${id}/like`)
 
 export const unLike = (id)=> mainApi.delete(`/post/${id}/like`)
 
+export const createComment = (id, body) => mainApi.post(`/post/${id}/comment`, body)
+
+export const deleteComment = (id) => mainApi.delete(`/post/comment/${id}`)
 

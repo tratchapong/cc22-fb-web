@@ -5,6 +5,7 @@ import usePostStore from '@/stores/postStore'
 import { toast } from 'react-toastify'
 import useUserStore from '@/stores/userStore'
 import TimeAgo from 'react-timeago'
+import CommentContainer from './CommentContainer'
 
 function PostItem(props) {
   const { post } = props
@@ -110,7 +111,7 @@ function PostItem(props) {
           </div>
         </div>
         <div className="divider h-0 my-0"></div>
-        {/* <CommentContainer postId={post.id} comments={post.comments} /> */}
+        <CommentContainer postId={post.id} comments={post.comments} />
       </div>
     </div>
   )
