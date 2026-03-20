@@ -2,10 +2,11 @@ import { CloseIcon, CommentIcon, LikeIcon, ShareIcon, ThreeDotIcon } from '@/ico
 import reactLogo from '../assets/react.svg'
 import Avatar from './Avatar'
 import usePostStore from '@/stores/postStore'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import useUserStore from '@/stores/userStore'
 import TimeAgo from 'react-timeago'
 import CommentContainer from './CommentContainer'
+import { confirmDelete } from '@/utils/confirmDelete'
 
 function PostItem(props) {
   const { post } = props
@@ -27,6 +28,9 @@ function PostItem(props) {
 
   const hdlDelete = async () => {
     try {
+      // const ok = await confirmDelete('post-item')
+      const ok = await confirmDelete()
+      if(!ok) { return }
       const resp = await deletePost(post.id)
       // toast.success(resp.data.message)
     } catch (err) {
@@ -41,10 +45,14 @@ function PostItem(props) {
   }
 
   return (
+    <>
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body p-3">
         <div className="flex justify-between">
-          <div className="flex gap-3">
+          <div className="flex gap-3 relative">
+            {/* <ToastContainer containerId='post-item'
+              toastClassName={ ()=>"default bg-warning px-9 py-2 relative top-80 rounded-lg" }
+            /> */}
             <Avatar className='w-11 h-11 rounded-full' imgSrc={post.user.profileImage} />
             <div className="flex flex-col">
               <p className='font-bold text-sm'>{post.user.firstName} {post.user.lastName}</p>
@@ -114,6 +122,7 @@ function PostItem(props) {
         <CommentContainer postId={post.id} comments={post.comments} />
       </div>
     </div>
+    </>
   )
 }
 
