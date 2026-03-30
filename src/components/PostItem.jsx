@@ -46,7 +46,7 @@ function PostItem(props) {
 
   return (
     <>
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100 shadow-xl animate-fade-in">
       <div className="card-body p-3">
         <div className="flex justify-between">
           <div className="flex gap-3 relative">
@@ -109,7 +109,7 @@ function PostItem(props) {
             onClick={hdlLikeClick}
           >
             {haveLike && <LikeIcon className='w-10 outline-primary outline-1 rounded outline-offset-2' />}
-            {!haveLike && <LikeIcon className='w-6' />}
+            {!haveLike && <LikeIcon className='w-6 ' />}
           </div>
           <div className="flex gap-3 justify-center items-center cursor-pointer hover:bg-gray-300 rounded-lg py-2 flex-1">
             <CommentIcon className='w-8' /> Comment

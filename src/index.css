@@ -2,6 +2,23 @@
 @plugin "daisyui" {
  themes : light --default, dark;
 }
+@theme {
+  /* 1. สร้างจังหวะการขยับ (Keyframes) */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 2. สร้างชื่อ Class สำหรับเรียกใช้ */
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+}
+
 
 @plugin "daisyui/theme" {
 name: "light";

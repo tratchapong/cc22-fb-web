@@ -5,6 +5,7 @@ import PostItem from "./PostItem"
 import { CloseIcon } from "@/icons"
 import PostFormEdit from "./PostFormEdit"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { toast } from "react-toastify"
 
 function PostContainer() {
   const [parent] = useAutoAnimate();
@@ -15,7 +16,10 @@ function PostContainer() {
   const currentPost = usePostStore(state => state.currentPost)
 
   useEffect(() => {
-    getAllPosts()
+    getAllPosts().catch(err => {
+      const errMsg = err.response?.data.message || err.message
+      toast.error(errMsg)
+    })
   }, [])
 
   return (
