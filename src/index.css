@@ -129,3 +129,14 @@ default: true;
 --tab-radius: 0.5rem;
 }
 
+.rdp-caption_label {
+  @apply text-amber-700 text-xl;
+}
+
+.rdp-months {
+  @apply text-pink-500 bg-indigo-300 text-xl;
+}
+
+.rdp-selected {
+  @apply scale-110 text-xl;
+}
